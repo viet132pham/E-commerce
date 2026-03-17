@@ -17,3 +17,8 @@ Required GitHub secrets:
 - SSH_KEY
 - SSH_PORT (optional, default 22)
 - APP_PATH (absolute path on server, e.g. /opt/ecommerce)
+
+## Backend auth setup
+The API auth uses Laravel Sanctum. After installing dependencies, run:
+- php artisan sanctum:install
+- php artisan migrate
