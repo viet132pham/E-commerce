@@ -22,3 +22,7 @@ Required GitHub secrets:
 The API auth uses Laravel Sanctum. After installing dependencies, run:
 - php artisan sanctum:install
 - php artisan migrate
+
+## Admin access
+Set a user as admin by updating the users table:
+- UPDATE users SET is_admin = true WHERE email = 'you@example.com';
