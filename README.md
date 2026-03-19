@@ -26,3 +26,9 @@ The API auth uses Laravel Sanctum. After installing dependencies, run:
 ## Admin access
 Set a user as admin by updating the users table:
 - UPDATE users SET is_admin = true WHERE email = 'you@example.com';
+
+## Seed data
+Run: php artisan db:seed
+Default admin user:
+- email: admin@example.com
+- password: password
