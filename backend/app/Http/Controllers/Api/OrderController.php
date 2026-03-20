@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderAddress;
@@ -10,7 +9,7 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
-class OrderController extends Controller
+class OrderController extends ApiController
 {
     public function index(Request $request)
     {
@@ -23,7 +22,7 @@ class OrderController extends Controller
 
         $orders = $query->orderBy('id', 'desc')->get();
 
-        return response()->json($orders);
+        return $this->success($orders);
     }
 
     public function show(Request $request, Order $order)
@@ -36,7 +35,7 @@ class OrderController extends Controller
 
         $order->load(['items', 'addresses']);
 
-        return response()->json($order);
+        return $this->success($order);
     }
 
     public function store(Request $request)
@@ -107,6 +106,6 @@ class OrderController extends Controller
 
         $order->load(['items', 'addresses']);
 
-        return response()->json($order, 201);
+        return $this->success($order, 'Created', 201);
     }
 }

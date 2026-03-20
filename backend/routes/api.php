@@ -12,7 +12,8 @@ use App\Http\Controllers\Api\Admin\ProductVariantAdminController;
 use App\Http\Controllers\Api\Admin\OrderAdminController;
 
 Route::get('/health', function () {
-    return response()->json(['status' => 'ok']);
+    return response()->json(['data' => ['status' => 'ok'], 'message' => 'OK']);
+});
 });
 
 Route::prefix('auth')->group(function () {
@@ -61,3 +62,4 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::get('/orders/{order}', [OrderAdminController::class, 'show']);
     Route::patch('/orders/{order}', [OrderAdminController::class, 'update']);
 });
+

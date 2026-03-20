@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class ProductVariantAdminController extends Controller
+class ProductVariantAdminController extends ApiController
 {
     public function store(Request $request, Product $product)
     {
@@ -28,7 +28,7 @@ class ProductVariantAdminController extends Controller
             'is_active' => $data['is_active'] ?? true,
         ]);
 
-        return response()->json($variant, 201);
+        return $this->success($variant, 'Created', 201);
     }
 
     public function update(Request $request, ProductVariant $variant)
@@ -43,13 +43,13 @@ class ProductVariantAdminController extends Controller
 
         $variant->update($data);
 
-        return response()->json($variant);
+        return $this->success($variant);
     }
 
     public function destroy(ProductVariant $variant)
     {
         $variant->delete();
 
-        return response()->json(['message' => 'Deleted']);
+        return $this->success(null, 'Deleted');
     }
 }

@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class OrderAdminController extends Controller
+class OrderAdminController extends ApiController
 {
     public function index()
     {
-        return response()->json(Order::with(['items', 'addresses'])->orderBy('id', 'desc')->paginate(20));
+        return $this->paginated(Order::with(['items', 'addresses'])->orderBy('id', 'desc')->paginate(20));
     }
 
     public function show(Order $order)
     {
         $order->load(['items', 'addresses']);
 
-        return response()->json($order);
+        return $this->success($order);
     }
 
     public function update(Request $request, Order $order)
@@ -30,6 +30,6 @@ class OrderAdminController extends Controller
         $order->status = $data['status'];
         $order->save();
 
-        return response()->json($order);
+        return $this->success($order);
     }
 }

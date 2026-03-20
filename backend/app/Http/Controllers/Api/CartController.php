@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class CartController extends Controller
+class CartController extends ApiController
 {
     public function show(Request $request)
     {
         $cart = $this->getOrCreateCart($request);
         $cart->load(['items.variant.product']);
 
-        return response()->json($this->cartResponse($cart));
+        return $this->success($this->cartResponse($cart));
     }
 
     public function addItem(Request $request)
@@ -43,7 +42,7 @@ class CartController extends Controller
 
         $cart->load(['items.variant.product']);
 
-        return response()->json($this->cartResponse($cart));
+        return $this->success($this->cartResponse($cart));
     }
 
     public function updateItem(Request $request, CartItem $cartItem)
@@ -62,7 +61,7 @@ class CartController extends Controller
 
         $cart->load(['items.variant.product']);
 
-        return response()->json($this->cartResponse($cart));
+        return $this->success($this->cartResponse($cart));
     }
 
     public function removeItem(Request $request, CartItem $cartItem)
@@ -75,7 +74,7 @@ class CartController extends Controller
         $cartItem->delete();
         $cart->load(['items.variant.product']);
 
-        return response()->json($this->cartResponse($cart));
+        return $this->success($this->cartResponse($cart));
     }
 
     private function getOrCreateCart(Request $request): Cart

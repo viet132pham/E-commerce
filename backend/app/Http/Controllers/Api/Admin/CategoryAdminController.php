@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class CategoryAdminController extends Controller
+class CategoryAdminController extends ApiController
 {
     public function index()
     {
-        return response()->json(Category::orderBy('id', 'desc')->paginate(20));
+        return $this->paginated(Category::orderBy('id', 'desc')->paginate(20));
     }
 
     public function show(Category $category)
     {
-        return response()->json($category);
+        return $this->success($category);
     }
 
     public function store(Request $request)
@@ -30,7 +30,7 @@ class CategoryAdminController extends Controller
 
         $category = Category::create($data);
 
-        return response()->json($category, 201);
+        return $this->success($category, 'Created', 201);
     }
 
     public function update(Request $request, Category $category)
@@ -44,13 +44,13 @@ class CategoryAdminController extends Controller
 
         $category->update($data);
 
-        return response()->json($category);
+        return $this->success($category);
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
 
-        return response()->json(['message' => 'Deleted']);
+        return $this->success(null, 'Deleted');
     }
 }

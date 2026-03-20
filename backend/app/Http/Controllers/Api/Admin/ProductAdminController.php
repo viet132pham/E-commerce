@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Models\Product;
-use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class ProductAdminController extends Controller
+class ProductAdminController extends ApiController
 {
     public function index()
     {
-        return response()->json(Product::with(['variants', 'images'])->orderBy('id', 'desc')->paginate(20));
+        return $this->paginated(Product::with(['variants', 'images'])->orderBy('id', 'desc')->paginate(20));
     }
 
     public function show(Product $product)
     {
         $product->load(['variants', 'images']);
 
-        return response()->json($product);
+        return $this->success($product);
     }
 
     public function store(Request $request)
@@ -52,7 +51,7 @@ class ProductAdminController extends Controller
 
         $product->load(['variants', 'images']);
 
-        return response()->json($product, 201);
+        return $this->success($product, 'Created', 201);
     }
 
     public function update(Request $request, Product $product)
@@ -69,13 +68,13 @@ class ProductAdminController extends Controller
 
         $product->load(['variants', 'images']);
 
-        return response()->json($product);
+        return $this->success($product);
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
 
-        return response()->json(['message' => 'Deleted']);
+        return $this->success(null, 'Deleted');
     }
 }

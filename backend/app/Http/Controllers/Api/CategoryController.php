@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class CategoryController extends ApiController
 {
     public function index()
     {
@@ -15,11 +13,11 @@ class CategoryController extends Controller
             ->orderBy('name')
             ->get();
 
-        return response()->json($categories);
+        return $this->success($categories);
     }
 
     public function show(Category $category)
     {
-        return response()->json($category);
+        return $this->success($category);
     }
 }

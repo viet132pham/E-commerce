@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductController extends ApiController
 {
     public function index(Request $request)
     {
@@ -26,13 +25,13 @@ class ProductController extends Controller
 
         $products = $query->orderBy('id', 'desc')->paginate(20);
 
-        return response()->json($products);
+        return $this->paginated($products);
     }
 
     public function show(Product $product)
     {
         $product->load(['variants', 'images']);
 
-        return response()->json($product);
+        return $this->success($product);
     }
 }

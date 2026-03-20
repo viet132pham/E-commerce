@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-class AuthController extends Controller
+class AuthController extends ApiController
 {
     public function register(Request $request)
     {
@@ -26,10 +25,10 @@ class AuthController extends Controller
 
         $token = $user->createToken('api')->plainTextToken;
 
-        return response()->json([
+        return $this->success([
             'user' => $user,
             'token' => $token,
-        ], 201);
+        ], 'Created', 201);
     }
 
     public function login(Request $request)
@@ -49,7 +48,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('api')->plainTextToken;
 
-        return response()->json([
+        return $this->success([
             'user' => $user,
             'token' => $token,
         ]);
@@ -57,13 +56,13 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        return response()->json($request->user());
+        return $this->success($request->user());
     }
 
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'Logged out']);
+        return $this->success(null, 'Logged out');
     }
 }
