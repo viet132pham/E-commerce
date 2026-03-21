@@ -32,3 +32,6 @@ Run: php artisan db:seed
 Default admin user:
 - email: admin@example.com
 - password: password
+
+## API docs (Postman)
+Import collection: docs/postman-collection.json
