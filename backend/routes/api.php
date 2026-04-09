@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\Admin\CategoryAdminController;
 use App\Http\Controllers\Api\Admin\ProductAdminController;
 use App\Http\Controllers\Api\Admin\ProductVariantAdminController;
@@ -13,7 +14,6 @@ use App\Http\Controllers\Api\Admin\OrderAdminController;
 
 Route::get('/health', function () {
     return response()->json(['data' => ['status' => 'ok'], 'message' => 'OK']);
-});
 });
 
 Route::prefix('auth')->group(function () {
@@ -41,6 +41,9 @@ Route::post('/checkout', [OrderController::class, 'store']);
 Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/orders/{order}', [OrderController::class, 'show']);
 
+Route::post('/payments/stripe/checkout', [PaymentController::class, 'createStripeCheckoutSession']);
+Route::post('/payments/stripe/webhook', [PaymentController::class, 'stripeWebhook']);
+
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
     Route::get('/categories', [CategoryAdminController::class, 'index']);
     Route::post('/categories', [CategoryAdminController::class, 'store']);
@@ -62,4 +65,3 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::get('/orders/{order}', [OrderAdminController::class, 'show']);
     Route::patch('/orders/{order}', [OrderAdminController::class, 'update']);
 });
-

@@ -35,3 +35,17 @@ Default admin user:
 
 ## API docs (Postman)
 Import collection: docs/postman-collection.json
+
+## Stripe payment (real)
+Add env in backend/.env:
+- STRIPE_KEY=
+- STRIPE_SECRET=
+- STRIPE_WEBHOOK_SECRET=
+
+Install dependency:
+- composer require stripe/stripe-php
+
+Create checkout session:
+- POST /api/payments/stripe/checkout
+Webhook:
+- POST /api/payments/stripe/webhook

@@ -17,6 +17,9 @@ class Order extends Model
         'total',
         'currency',
         'placed_at',
+        'stripe_session_id',
+        'stripe_payment_intent_id',
+        'paid_at',
     ];
 
     protected $casts = [
@@ -26,6 +29,7 @@ class Order extends Model
         'shipping_total' => 'decimal:2',
         'total' => 'decimal:2',
         'placed_at' => 'datetime',
+        'paid_at' => 'datetime',
     ];
 
     public function items()
